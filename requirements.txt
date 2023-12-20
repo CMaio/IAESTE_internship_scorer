@@ -1,0 +1,10 @@
+asgiref==3.7.2
+customtkinter==5.2.1
+darkdetect==0.8.0
+Django==5.0
+image==1.5.33
+packaging==23.2
+Pillow==10.1.0
+six==1.16.0
+sqlparse==0.4.4
+tzdata==2023.3
