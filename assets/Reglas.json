@@ -1,0 +1,426 @@
+{
+  "base": 300,
+  "term": -150,
+  "language": {
+    "check": [
+      "Language1",
+      "Language1Level",
+      "Language1Or",
+      "Language2",
+      "Language2Level",
+      "Language2Or",
+      "Language3",
+      "Language3Level"
+    ],
+    "English": 0,
+    "French": -60,
+    "German": -60,
+    "Portuguese": -60,
+    "default": -60,
+    "Spanish": {
+      "Excellent": -60,
+      "Good": -45,
+      "Fair": -20
+    }
+  },
+
+  "period": {
+    "checkWeeks": ["WeeksMin", "WeeksMax"],
+    "checkMonth": ["From", "To"],
+    "8": 40,
+    "12": 20,
+    "default": 0,
+    "Julio,agosto": 40
+  },
+
+  "payment": {
+    "check": ["Payment", "PaymentFrequency"],
+    "minWeek": 190,
+    "minMonth": 800,
+    "over": 50,
+    "points": 10,
+    "week": 4.2
+  },
+
+  "country": {
+    "check": ["OtherRequirements"],
+    "Un solo pais": -60,
+    "Union Europea/Schengen": -40,
+    "Latinoamérica": -40,
+    "Otro grupo de paises": -50
+  },
+
+  "generalDisciplines": {
+    "check": ["GeneralDisciplines", "FieldsOfStudy"],
+    "disciplines": [
+      {
+        "field": "agriculture and food science",
+        "points": 0,
+        "FieldsOfStudy": [
+          {
+            "field": "food techonology and processing",
+            "points": 10
+          }
+        ]
+      },
+      {
+        "field": "natural resources and conservation",
+        "points": 10,
+        "FieldsOfStudy": [
+          {
+            "field": "enviromental studies",
+            "points": 10
+          },
+          {
+            "field": "enviromental science",
+            "points": 10
+          }
+        ]
+      },
+      {
+        "field": "architecture",
+        "points": 20,
+        "FieldsOfStudy": [
+          {
+            "field": "architecture",
+            "points": 20
+          },
+          {
+            "field": "city/Urban, community and regional planning",
+            "points": 20
+          },
+          {
+            "field": "enviromental design / architecture",
+            "points": 20
+          },
+          {
+            "field": "landscape architecture",
+            "points": 20
+          },
+          {
+            "field": "architectural technology / technician",
+            "points": 20
+          }
+        ]
+      },
+      {
+        "field": "it",
+        "points": 0,
+        "FieldsOfStudy": [
+          {
+            "field": "artificial intelligence",
+            "points": 20
+          },
+          {
+            "field": "computer system networking",
+            "points": 10
+          },
+          {
+            "field": "telecommunications",
+            "points": 10
+          }
+        ]
+      },
+      {
+        "field": "education",
+        "points": 0,
+        "FieldsOfStudy": []
+      },
+      {
+        "field": "engineering",
+        "points": 0,
+        "FieldsOfStudy": [
+          {
+            "field": "bioengineering and biomedical engineering",
+            "points": 20
+          },
+          {
+            "field": "environmental/ environmental health engineering",
+            "points": 10
+          },
+          {
+            "field": "metallurgical engineering",
+            "points": 20
+          },
+          {
+            "field": "naval architecture and marine engineering",
+            "points": 10
+          },
+          {
+            "field": "nuclear engineering",
+            "points": 20
+          },
+          {
+            "field": "industrial engineering",
+            "points": 20
+          },
+          {
+            "field": "manufacturing engineering",
+            "points": 20
+          },
+          {
+            "field": "biochemical engineering",
+            "points": 20
+          },
+          {
+            "field": "quality control technolgy/technician",
+            "points": 20
+          },
+          {
+            "field": "nanotechnology",
+            "points": 20
+          }
+        ]
+      },
+      {
+        "field": "civil engineering",
+        "points": 20,
+        "FieldsOfStudy": [
+          {
+            "field": "civil engineering",
+            "points": 20
+          },
+          {
+            "field": "geotechnical and geoenviromental engineering",
+            "points": 20
+          },
+          {
+            "field": "transportantion and highway engineering",
+            "points": 20
+          },
+          {
+            "field": "Water Resources engineering",
+            "points": 20
+          },
+          {
+            "field": "Mining and Mineral engineering",
+            "points": 10
+          },
+          {
+            "field": "construction engineering",
+            "points": 20
+          },
+          {
+            "field": "Survering engineering",
+            "points": 10
+          },
+          {
+            "field": "Geological/GeoPhysical engineering",
+            "points": 10
+          }
+        ]
+      },
+      {
+        "field": "electrical engineering",
+        "points": 20,
+        "FieldsOfStudy": [
+          {
+            "field": "Electrical and Electronics engineering",
+            "points": 20
+          },
+          {
+            "field": "Laser and Optical engineering",
+            "points": 20
+          },
+          {
+            "field": "Telecommunications engineering",
+            "points": 10
+          },
+          {
+            "field": "Electrical, Electronics and communicationsengineering, Other",
+            "points": 20
+          },
+          {
+            "field": "Electromechanical engineering",
+            "points": 20
+          },
+          {
+            "field": "Energy engineering",
+            "points": 20
+          },
+          {
+            "field": "Embedded Systems",
+            "points": 20
+          }
+        ]
+      },
+      {
+        "field": "mechanical engineering",
+        "points": 20,
+        "FieldsOfStudy": [
+          {
+            "field": "aerospace,aeronautical and astronautical/space engineering",
+            "points": 20
+          },
+          {
+            "field": "engineering mechanics",
+            "points": 20
+          },
+          {
+            "field": "mechanical engineering",
+            "points": 20
+          },
+          {
+            "field": "mechatronics, robotics, and automation engineering",
+            "points": 20
+          }
+        ]
+      },
+      {
+        "field": "biological and biomedical sciences",
+        "points": 10,
+        "FieldsOfStudy": [
+          {
+            "field": "biology / biological sciences, general",
+            "points": 10
+          },
+          {
+            "field": "biomedical sciences, general",
+            "points": 10
+          },
+          {
+            "field": "biochemistry",
+            "points": 10
+          },
+          {
+            "field": "biophysics",
+            "points": 10
+          },
+          {
+            "field": "molecular biology",
+            "points": 10
+          },
+          {
+            "field": "molecular biochemistry",
+            "points": 10
+          },
+          {
+            "field": "structural biology",
+            "points": 10
+          },
+          {
+            "field": "biochemistry and molecular biology",
+            "points": 10
+          },
+          {
+            "field": "microbiology, general",
+            "points": 10
+          },
+          {
+            "field": "biotechnology",
+            "points": 10
+          }
+        ]
+      },
+      {
+        "field": "mathematics and statistics",
+        "points": 0,
+        "FieldsOfStudy": []
+      },
+      {
+        "field": "physical sciences",
+        "points": 0,
+        "FieldsOfStudy": []
+      },
+      {
+        "field": "physics",
+        "points": 0,
+        "FieldsOfStudy": []
+      },
+      {
+        "field": "chemistry, material sceince, and chemical engineering",
+        "points": 20,
+        "FieldsOfStudy": [
+          {
+            "field": "chemistry, general",
+            "points": 10
+          },
+          {
+            "field": "analytical chemistry",
+            "points": 10
+          },
+          {
+            "field": "inorganic chemistry",
+            "points": 10
+          },
+          {
+            "field": "organic chemistry",
+            "points": 10
+          },
+          {
+            "field": "physical chemistry",
+            "points": 10
+          },
+          {
+            "field": "polymer chemistry",
+            "points": 10
+          },
+          {
+            "field": "chemical physics",
+            "points": 10
+          },
+          {
+            "field": "environmental chemistry",
+            "points": 10
+          },
+          {
+            "field": "materials science",
+            "points": 10
+          },
+          {
+            "field": "materials chemistry",
+            "points": 10
+          },
+          {
+            "field": "chemical engineering",
+            "points": 20
+          },
+          {
+            "field": "chemical and biomolecular engineering",
+            "points": 20
+          },
+          {
+            "field": "materials engineering",
+            "points": 20
+          },
+          {
+            "field": "petroleum engineering",
+            "points": 20
+          },
+          {
+            "field": "textile sciences and engineering",
+            "points": 10
+          },
+          {
+            "field": "Polymer/Plastics engineering",
+            "points": 20
+          }
+        ]
+      },
+      {
+        "field": "economics and social sciences",
+        "points": 0,
+        "FieldsOfStudy": []
+      },
+      {
+        "field": "business, management and marketing",
+        "points": 0,
+        "FieldsOfStudy": []
+      },
+      {
+        "field": "default",
+        "default": 0,
+        "FieldsOfStudy": [
+          {
+            "field": "Logistics, Materials, and Supply chain Management",
+            "points": 20
+          },
+          {
+            "field": "Operations Management and Supervision",
+            "points": 10
+          }
+        ]
+      }
+    ]
+  }
+}

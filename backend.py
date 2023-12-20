@@ -2,12 +2,17 @@ import tkinter
 from tkinter import filedialog as fd
 from tkinter import messagebox
 import csv
+import os
+from openpyxl import Workbook
+from openpyxl.styles import PatternFill, Font, Alignment,Border, Side
+import json
 
 #Data
 allData=[]
 allIDs=[]
 allBidsConf=[]
 result=[]
+rules = None
 
 
 ##get all the ids
@@ -31,29 +36,6 @@ def getOfferBidParameters(id):
         if bid[0] == id:
             return bid
   
-        
-#Get the final result of the the offer, and save it in the array result
-def getResultBid(row):
-    global result
-    resultBid = 0
-    resultRow=[]
-    for element in row:
-        if isinstance(element, str):
-            resultRow[0] = element
-        if isinstance(element, int):
-            resultBid += element
-    
-    resultRow[1] = resultBid
-    result.append(resultRow)
-
-
-
-#Make all the correct points with for the different rows
-def startCheckingRules():
-    
-    pass
-
-
 #Find if there is already a row with that id that is saved and if not just adds the row to config
 def setOfferBidParameters(row):
     for index,line in enumerate(allBidsConf):
@@ -61,6 +43,215 @@ def setOfferBidParameters(row):
             allBidsConf[index] = row
             return
     allBidsConf.append(row)
+
+
+
+
+
+
+#Start of methods for score different parts needed
+def submitedOfferConfig():
+    return rules.get('base')
+
+def checkTimeDeliveryConfig(isNotOnTime):
+    return rules.get('term') if isNotOnTime else 0
+
+def languagesConfig(row):
+    lanRules = rules.get('language')
+    result = 0
+    allresutlts=[]
+    isSpanish = 0
+    checkOrAdd = 0
+
+    for opt in lanRules['check']:
+        lang = row[opt]
+        if lang != "":
+            if opt[-1].isdigit():
+                if lang != 'Spanish':
+                    if lang in lanRules:
+                        allresutlts.append(lanRules[lang])
+                    else:
+                        allresutlts.append(lanRules['default'])
+                        
+                else:
+                    isSpanish = 1
+            else:
+                if 'Level' in opt and isSpanish == 1:
+                    allresutlts.append(lanRules['Spanish'][lang])
+                    isSpanish = 0
+                elif 'Level' not in opt:
+                    allresutlts.append(row[opt])
+    
+    for option in allresutlts:
+        if isinstance(option, int):
+            if checkOrAdd == 1:
+                    result += option
+            else:
+                if result < option:
+                    result = option
+                else:
+                    if option == 'Or':
+                        checkOrAdd = 0
+                    else: 
+                        checkOrAdd = 1
+                
+
+    return result
+
+
+def periodConfig(row):
+    result = 0
+
+
+
+
+    return result
+"""      if int(fila[reglascheck[0]].split("-")[0]) != int(fila[reglascheck[0]].split("-")[1]): 
+        return 0 
+    
+    startMonth = int(fila[reglascheck[0]].split("-")[1])
+    finishMonth = int(fila[reglascheck[1]].split("-")[1])
+
+    if startMonth >= 6 and finishMonth <= 9:
+        return 20
+
+
+
+    result = 0
+    maxStartWeeks = 27
+    weeksStart = int(fila[reglascheck[0]])
+    weeksEnd =  int(fila[reglascheck[1]])
+
+    tmp= self.reglas['weeks']
+    for i in tmp:
+        if ',' in i:
+            tmpwk = i.split(",")
+
+            if int(tmpwk[1]) != -1:
+                if int(tmpwk[0]) <= weeksEnd <= int(tmpwk[1]):
+                    return self.reglas['weeks'][i]
+            else:
+                if int(tmpwk[0]) <= weeksEnd:
+                    return self.reglas['weeks'][i] """
+
+
+
+def salaryConfig(row):
+    result = 0
+    
+
+    frequency = row[rules['payment']['check'][1]]
+    pay = float(row[rules['payment']['check'][0]])
+    stepAddingPoints = rules['payment']['over']
+    minPaymentMonth = rules['payment']['minMonth']
+    if frequency != 'Monthly':
+        pay = pay * rules['payment']['week']
+
+    result = (pay - minPaymentMonth ) // stepAddingPoints
+
+    return result * rules['payment']['points']
+
+def countryrestrictionsConfig(restriction):
+    return rules['country'][restriction] if restriction != 'Sin restricción' else 0
+
+
+def findPos(discipline):
+    allDisciplines = rules['generalDisciplines']['disciplines']
+    i = 0
+    j = 0
+
+    while i < len(allDisciplines):
+        if discipline != allDisciplines[i]['field'].lower():
+            j = 0
+            while j < len( allDisciplines[i]['FieldsOfStudy']):
+                if discipline == allDisciplines[i]['FieldsOfStudy'][j]['field']:
+                    return allDisciplines[i]['FieldsOfStudy'][j]
+                j += 1
+        else:
+            return allDisciplines[i]
+        
+        i += 1
+
+    return 0
+    
+def fosConfig(row):
+    result = 0
+    generalDiscipline = row[rules['generalDisciplines']['check'][0]]
+    fieldsofstudy = row[rules['generalDisciplines']['check'][1]].split(";")
+
+    if "|" in generalDiscipline:
+        generalDiscipline =  generalDiscipline.split("|")
+
+
+    
+    if isinstance(generalDiscipline, str):
+        position = findPos(generalDiscipline.lower())
+        if position != 0:
+                if result <= position['points']:
+                    result = position['points']
+    else:
+        for ds in generalDiscipline:
+            position = findPos(ds.lower())
+            if position != 0:
+                if result <= position['points']:
+                    result = position['points']
+
+
+    if len(fieldsofstudy):
+        for fs in fieldsofstudy:
+            position = findPos(fs.lower())
+            if position != 0:
+                if result <= position['points']:
+                    result = position['points']
+
+    return result
+
+
+#Make all the correct points with for the different rows
+def startCheckingRules():
+    global result
+    global rules
+
+    rules = 'assets/Reglas.json'
+    with open(rules, 'r') as archivo:
+        rules = json.load(archivo)
+    
+    print("start checking")
+    result.append(['Ref.No','Total','Practica entregada', 'Plazo de entrega', 'Idiomas','Duración y tipo de periodo', 'Sueldo', 'Países', 'Valoración especialidad'])
+
+    for offer in allBidsConf:
+        resultRow = []
+        row = getOfferInfo(offer[0])
+        resultRow.append(offer[0])
+        resultRow.append(0)
+
+        submitedOffer = submitedOfferConfig()
+        resultRow.append(submitedOffer)
+
+        deliveryTime = checkTimeDeliveryConfig(offer[2])
+        resultRow.append(deliveryTime)
+            
+        languages = languagesConfig(row)
+        resultRow.append(languages)
+
+        period = periodConfig(row)
+        resultRow.append(period)
+
+
+        salary = salaryConfig(row)
+        resultRow.append(salary)
+        
+        country = countryrestrictionsConfig(offer[4])
+        resultRow.append(country)
+
+        fos = fosConfig(row)
+        resultRow.append(fos)
+        
+        result.append(resultRow)
+        
+    print(result)
+    getResultBid()
+    pass
 
 
 #Saves all the information in the csv file, it needs the format also will break in the last for and it need and end windows(there is a finish method)
@@ -74,9 +265,77 @@ def saveConfigToPoints():
 
 
 
+#Get the final result of the the offer, and save it in the array result
+        #Modificar porque no esta bien hecho
+def getResultBid():
+    global result
+    
+
+    for i in range(1, len(result)):  # Comenzando desde el índice 1
+        row = result[i]
+        resultSum = row[2:]
+        resultNum = 0
+        for element in resultSum:
+            resultNum += element
+    
+        row[1] = resultNum
+    createCSV()
 
 
+def createCSV():
+    # Crear un libro de trabajo y seleccionar la hoja activa
+    wb = Workbook()
+    ws = wb.active
 
+    # Añadir los datos al libro de trabajo
+    for row_data in result:
+        ws.append(row_data)
+
+    thin_border = Border(left=Side(style='thin'), 
+                     right=Side(style='thin'), 
+                     top=Side(style='thin'), 
+                     bottom=Side(style='thin'))
+
+    # Formatear la cabecera (primera fila)
+    for row in ws.iter_rows(min_row=1, max_row=len(result), min_col=1, max_col=len(result[0])):
+        for cell in row:
+            # Aplicar bordes
+            cell.border = thin_border
+            # Formato para la cabecera
+            if cell.row == 1:
+                cell.fill = PatternFill(start_color="FFFF00", end_color="FFFF00", fill_type="solid")  # Color amarillo
+                cell.font = Font(bold=True)
+                cell.alignment = Alignment(horizontal="center")
+            # Formato para la segunda columna
+            if cell.column == 2:
+                cell.font = Font(color="FF0000", bold=True)
+
+    # Ajustar el tamaño de las celdas para que se acomoden al contenido
+    for col in ws.columns:
+        max_length = 0
+        column = col[0].column_letter  # Obtener la letra de la columna
+        for cell in col:
+            try:  # Necesario para manejar valores no string
+                if len(str(cell.value)) > max_length:
+                    max_length = len(cell.value)
+            except:
+                pass
+        adjusted_width = (max_length + 2)
+        ws.column_dimensions[column].width = adjusted_width
+
+    # Obtener la ruta del escritorio del usuario
+    desktop = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')
+
+    # Nombre del archivo de Excel
+    nombre_archivo = "mi_archivo.xlsx"
+
+    # Ruta completa para guardar el archivo
+    ruta_completa = os.path.join(desktop, nombre_archivo)
+
+    # Guardar el libro de trabajo
+    wb.save(ruta_completa)
+
+    print(f"Archivo guardado en: {ruta_completa}")
 
 
 
@@ -157,38 +416,7 @@ def disciplines(self, fila, reglascheck):
 
 
 def countryRestrictions(self,fila,reglascheck):
-    result = 0
-    salida = -1
-    self.textbox.configure(state="normal")
-    self.textbox.delete("0.0",tkinter.END)
-    self.textbox.insert("0.0",fila['Ref.No']+"\n\n")
-    if fila[reglascheck[0]] != "":
-        self.textbox.insert("2.0",fila[reglascheck[0]])
-    else:
-        self.textbox.insert("2.0","No requeriments")
-    self.textbox.configure(state="disable")
-    print("arrived")
-    self.wait_variable(self.restrictionchoosed)
-    print("passed")
-    salida = self.restrictionchoosed.get()
-
-    ##print(fila[reglascheck[0]])
-    ##salida = int(input("Si hay alguna restriccion referente a paises escribe el numero:\n[0] No hay restriccion \n[1] Restricción a un solo pais \n[2] Union Europea \n[3] Europa \n[4] Latinoamerica \n[5] Otros grupos de paises "))
-
-    if salida == 0:
-        result = 0
-    elif salida == 1:
-        result = self.reglas['country']['only']
-    elif salida == 2:
-        result = self.reglas['country']['UE']
-    elif salida == 3:
-        result = self.reglas['country']['EUROPA']
-    elif salida == 4:
-        result = self.reglas['country']['LATINOAMERICA']
-    elif salida == 5:
-        result = self.reglas['country']['OTRO']
-
-    self.restrictionchoosed.set(-1)
+    
     return result
 
 def payment(self,fila, reglascheck):
@@ -303,6 +531,7 @@ def practica(self,fila, typeOffert):
     header = ['Ref.No','language','weeks','period','payment', 'country','generalDisciplines']
     puntuacion = 0
     result = []
+    
 
     puntuacion += self.baseRules(typeOffert)
 

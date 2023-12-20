@@ -183,6 +183,7 @@ def fillComponentsOfSavedBid(componentsParameters):
 
     pass
 def on_treeview_click(event):
+    #error puedo seleccionar titulo
     item = offersTable.selection()[0]
     value = offersTable.item(item, 'values')[0]
 
@@ -275,7 +276,7 @@ option_chooser.pack(side = "top")
 option_chooser.grid_columnconfigure(5, weight=1)
 option_chooser.grid_rowconfigure(2, weight=1)
 
-for i, label in enumerate(["Un solo pais", "Union Europea", "Europa", "Latinoamérica", "Otro grupo de paises", "Sin restricción"]):
+for i, label in enumerate(["Un solo pais", "Union Europea/Schengen", "Latinoamérica", "Otro grupo de paises", "Sin restricción"]):
     button = customtkinter.CTkButton(option_chooser, text=label, command=lambda label=label,i=i: update_selected_country(i,label),state="disabled")
     button.grid(row=i // 3, column=i % 3, padx=(20, 10), pady=(10, 10), sticky="ew")
     buttons.append(button)
