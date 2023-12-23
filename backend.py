@@ -13,6 +13,11 @@ allIDs=[]
 allBidsConf=[]
 result=[]
 rules = None
+CSVName = ''
+
+def saveCSVName(fileCSV):
+    global CSVName
+    CSVName = fileCSV
 
 
 ##get all the ids
@@ -101,38 +106,22 @@ def languagesConfig(row):
 
 def periodConfig(row):
     result = 0
+    minWeeks =int(row[rules["period"]["checkWeeks"][0]])
+    maxWeeks = int(row[rules["period"]["checkWeeks"][1]])
+    startMonth = int(row[rules["period"]["checkMonth"][0]].split("-")[1])
+    endMonth = int(row[rules["period"]["checkMonth"][1]].split("-")[1])
 
+    if minWeeks <= 8 or maxWeeks <= 8:
+        if startMonth == 7 and endMonth == 8:
+            result = rules["period"]["8"]
+        return result
 
-
-
-    return result
-"""      if int(fila[reglascheck[0]].split("-")[0]) != int(fila[reglascheck[0]].split("-")[1]): 
-        return 0 
+    if minWeeks <= 12 or maxWeeks <= 12:
+        result = rules["period"]["12"]
+        return result
     
-    startMonth = int(fila[reglascheck[0]].split("-")[1])
-    finishMonth = int(fila[reglascheck[1]].split("-")[1])
-
-    if startMonth >= 6 and finishMonth <= 9:
-        return 20
-
-
-
-    result = 0
-    maxStartWeeks = 27
-    weeksStart = int(fila[reglascheck[0]])
-    weeksEnd =  int(fila[reglascheck[1]])
-
-    tmp= self.reglas['weeks']
-    for i in tmp:
-        if ',' in i:
-            tmpwk = i.split(",")
-
-            if int(tmpwk[1]) != -1:
-                if int(tmpwk[0]) <= weeksEnd <= int(tmpwk[1]):
-                    return self.reglas['weeks'][i]
-            else:
-                if int(tmpwk[0]) <= weeksEnd:
-                    return self.reglas['weeks'][i] """
+    result = rules["period"]["default"]
+    return result
 
 
 
@@ -144,8 +133,12 @@ def salaryConfig(row):
     pay = float(row[rules['payment']['check'][0]])
     stepAddingPoints = rules['payment']['over']
     minPaymentMonth = rules['payment']['minMonth']
+    
     if frequency != 'Monthly':
         pay = pay * rules['payment']['week']
+
+    if pay <= minPaymentMonth:
+        return 0
 
     result = (pay - minPaymentMonth ) // stepAddingPoints
 
@@ -266,12 +259,11 @@ def saveConfigToPoints():
 
 
 #Get the final result of the the offer, and save it in the array result
-        #Modificar porque no esta bien hecho
 def getResultBid():
     global result
     
 
-    for i in range(1, len(result)):  # Comenzando desde el índice 1
+    for i in range(1, len(result)): 
         row = result[i]
         resultSum = row[2:]
         resultNum = 0
@@ -283,6 +275,7 @@ def getResultBid():
 
 
 def createCSV():
+    global CSVName
     # Crear un libro de trabajo y seleccionar la hoja activa
     wb = Workbook()
     ws = wb.active
@@ -325,9 +318,9 @@ def createCSV():
 
     # Obtener la ruta del escritorio del usuario
     desktop = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')
-
+    print(CSVName)
     # Nombre del archivo de Excel
-    nombre_archivo = "mi_archivo.xlsx"
+    nombre_archivo = "RESULT_"+ CSVName +".xlsx"
 
     # Ruta completa para guardar el archivo
     ruta_completa = os.path.join(desktop, nombre_archivo)
@@ -341,281 +334,3 @@ def createCSV():
 
 
 
-
-
-##def start_offers_scores():
-    ##mainWorking(fileCS,checkIsSecond.get())
-
-
-def change_state_bar(self,value):
-    self.progressbar_1.set(value)
-
-def select_restriction(self,value):
-    self.restrictionchoosed.set(value)
-
-def finish_scores(self):
-    messagebox.showinfo("","Se han puntuado todas las ofertas!")
-    self.destroy()
-    print("finish----------")
-
-
-
-
-
-def findPosition(self, discipline):
-    allDisciplines = self.reglas['generalDisciplines']['disciplines']
-    i = 0
-    j = 0
-
-    while i < len(allDisciplines):
-        if discipline != allDisciplines[i]['field'].lower():
-            j = 0
-            while j < len( allDisciplines[i]['FieldsOfStudy']):
-                if discipline == allDisciplines[i]['FieldsOfStudy'][j]['field']:
-                    return allDisciplines[i]['FieldsOfStudy'][j]
-                j += 1
-        else:
-            return allDisciplines[i]
-        
-        i += 1
-
-    return 0
-
-
-def disciplines(self, fila, reglascheck):
-    result = 0
-    generalDiscipline = fila[reglascheck[0]]
-    fieldsofstudy = fila[reglascheck[1]].split(";")
-
-    if "|" in generalDiscipline:
-        generalDiscipline =  generalDiscipline.split("|")
-
-
-    
-    if isinstance(generalDiscipline, str):
-        position = self.findPosition(generalDiscipline.lower())
-        if position != 0:
-                if result <= position['points']:
-                    result = position['points']
-    else:
-        for ds in generalDiscipline:
-            position = self.findPosition(ds.lower())
-            if position != 0:
-                if result <= position['points']:
-                    result = position['points']
-
-
-    if len(fieldsofstudy):
-        for fs in fieldsofstudy:
-            position = self.findPosition(fs.lower())
-            if position != 0:
-                if result <= position['points']:
-                    result = position['points']
-
-    return result
-
-
-def countryRestrictions(self,fila,reglascheck):
-    
-    return result
-
-def payment(self,fila, reglascheck):
-    result = 0
-    frequency = fila[reglascheck[1]]
-    pay = float(fila[reglascheck[0]])
-    period = self.reglas['payment'][frequency]['period']
-    startrange = self.reglas['payment'][frequency]['startrange'].split(",")
-    startpay = float(startrange[0])
-    endpay = float(startrange[1])
-
-    while result < 30:
-        if startpay <= pay <= endpay:
-            break        
-        
-        result += 2
-        startpay = startpay + period
-        endpay = endpay + period
-
-    return result
-
-def monthPeriod(self,fila, reglascheck):
-    if int(fila[reglascheck[0]].split("-")[0]) != int(fila[reglascheck[0]].split("-")[1]): 
-        return 0 
-    
-    startMonth = int(fila[reglascheck[0]].split("-")[1])
-    finishMonth = int(fila[reglascheck[1]].split("-")[1])
-
-    if startMonth >= 6 and finishMonth <= 9:
-        return 20
-
-    return 0
-
-def weeksPeriod(self,fila, reglascheck):
-    result = 0
-    maxStartWeeks = 27
-    weeksStart = int(fila[reglascheck[0]])
-    weeksEnd =  int(fila[reglascheck[1]])
-
-    tmp= self.reglas['weeks']
-    for i in tmp:
-        if ',' in i:
-            tmpwk = i.split(",")
-
-            if int(tmpwk[1]) != -1:
-                if int(tmpwk[0]) <= weeksEnd <= int(tmpwk[1]):
-                    return self.reglas['weeks'][i]
-            else:
-                if int(tmpwk[0]) <= weeksEnd:
-                    return self.reglas['weeks'][i]
-
-    return result
-
-def languagePoints(self,fila, reglascheck):
-    result = 0
-    allresutlts=[]
-    isSpanish = 0
-    checkOrAdd = 0
-
-    for opt in reglascheck:
-        lang = fila[opt]
-        if lang != "":
-            if opt[-1].isdigit():
-                if lang != 'Spanish':
-                    if lang in self.reglas['language']:
-                        allresutlts.append(self.reglas['language'][lang])
-                    else:
-                        allresutlts.append(self.reglas['language']['default'])
-                        
-                else:
-                    isSpanish = 1
-            else:
-                if 'Level' in opt and isSpanish == 1:
-                    allresutlts.append(self.reglas['language']['Spanish'][lang])
-                    isSpanish = 0
-                elif 'Level' not in opt:
-                    allresutlts.append(fila[opt])
-                    
-    
-    for option in allresutlts:
-        if isinstance(option, int):
-            if checkOrAdd == 1:
-                    result += option
-            else:
-                if result < option:
-                    result = option
-                else:
-                    if option == 'Or':
-                        checkOrAdd = 0
-                    else: 
-                        checkOrAdd = 1
-                
-
-    return result
-
-
-def baseRules(self,type):
-    result = 0
-    if type == '' or type =='off':
-        type = "1"
-    else:
-        type = "2"
-
-
-    result += self.reglas['base']
-    result += self.reglas['term'][type]
-
-    return result
-
-
-def practica(self,fila, typeOffert):
-    header = ['Ref.No','language','weeks','period','payment', 'country','generalDisciplines']
-    puntuacion = 0
-    result = []
-    
-
-    puntuacion += self.baseRules(typeOffert)
-
-
-
-    for opt in header:
-        if opt == 'Ref.No':
-            result.append(fila[opt])
-        
-        if opt == 'language':
-            puntuacion += self.languagePoints(fila,self.reglas[opt]['check'])
-            print("Puntos por lenguaje-----------------------")
-            print(puntuacion)
-            print("-----------------------")
-
-        if opt == 'weeks':
-            puntuacion += self.weeksPeriod(fila,self.reglas[opt]['check'])
-            print("Puntos por weeks-----------------------")
-            print(puntuacion)
-            print("-----------------------")
-
-        if opt == 'period':
-            puntuacion += self.monthPeriod(fila,self.reglas[opt]['check'])
-            print("Puntos por period-----------------------")
-            print(puntuacion)
-            print("-----------------------")
-
-        if opt == 'payment':
-            puntuacion += self.payment(fila,self.reglas[opt]['check'])
-            print("Puntos por payment-----------------------")
-            print(puntuacion)
-            print("-----------------------")
-
-        if opt == 'country':
-            puntuacion += self.countryRestrictions(fila,self.reglas[opt]['check'])
-            print("Puntos por country-----------------------")
-            print(puntuacion)
-            print("-----------------------")
-
-        if opt == 'generalDisciplines':
-            puntuacion += self.disciplines(fila,self.reglas[opt]['check'])
-            print("Puntos por generalDisciplines-----------------------")
-            print(puntuacion)
-            print("-----------------------")
-    
-    result.append(puntuacion)
-
-    return result
-
-
-def settingResultname(self,namedocument):
-    tmpresult = namedocument.split("/")
-    tmpdoc = tmpresult[len(tmpresult)-1]
-    tmpdoc = tmpdoc.split(".csv")
-    resultdoc = tmpdoc[0] + "-Resultado.csv"
-
-    resultdir =""
-    for index,x in enumerate(tmpresult):
-        if index == len(tmpresult) - 1:
-            resultdir = resultdir + resultdoc
-        else:
-            resultdir = resultdir + x + "/"
-
-    return resultdir
-
-
-def mainWorking(self,namedocument,typeOffer):
-    totallines = 0
-    actualline=0
-    numstoadd = 0
-    self.change_state_bar(0)
-    resultdocument = self.settingResultname(namedocument)
-
-    with open(namedocument, errors="ignore") as file_obj:
-        with open(resultdocument,'w',) as file2_obj:
-            reader_obj = csv.DictReader(file_obj)
-            writer_obj = csv.writer(file2_obj)
-            numstoadd = totallines / 0.1
-            for row in reader_obj:
-                if "ES-20" in row['Ref.No']:
-                    
-                    resultrow = self.practica(row,typeOffer)
-                    actualline = actualline + numstoadd
-                    self.change_state_bar(actualline)
-                    writer_obj.writerow(resultrow)
-            
-    self.finish_scores()

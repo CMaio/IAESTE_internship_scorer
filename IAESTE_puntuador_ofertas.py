@@ -5,6 +5,12 @@ import customtkinter
 from PIL import Image
 from tkinter import filedialog as fd
 import backend as bk
+import os 
+import sys
+
+if getattr(sys, 'frozen', False):
+    os.chdir(sys._MEIPASS)
+
 
 def change_appearance_mode_event(new_appearance_mode: str):
     customtkinter.set_appearance_mode(new_appearance_mode)
@@ -55,7 +61,8 @@ def startBids():
     if fileCSV == "":
         errorCSV()
         return
-
+    fileNameSave = fileCSV.split("/")[-1].split(".")[0]
+    bk.saveCSVName(fileNameSave)
     offersIDAll = bk.getOffersIds(fileCSV)
     singleStep = 1/len(offersIDAll)
     actualOfferID = offersIDAll[0]
@@ -191,12 +198,26 @@ def on_treeview_click(event):
     fillComponentsOfSavedBid(configOffer)
     
 
+def finish_scores():
+    messagebox.showinfo("","Se han puntuado todas las ofertas!")
+    window.destroy()
+    print("finish----------")
 
 def finishProgram():
     bk.startCheckingRules()
     print("program finish")
+    finish_scores()
     pass
 
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
 
 #Data
 maxOffers = 100
@@ -221,8 +242,8 @@ lFrame = customtkinter.CTkFrame(window,width=249,height=580, corner_radius=1)
 lFrame.pack_propagate(False)
 lFrame.pack(side="left")
 
-IAESTELogo = customtkinter.CTkImage(light_image=Image.open("./assets/IAESTE_black_logo.png"),
-                                    dark_image=Image.open("./assets/IAESTE_blue_logo.png"),
+IAESTELogo = customtkinter.CTkImage(light_image=Image.open(resource_path("assets/IAESTE_black_logo.png")),
+                                    dark_image=Image.open(resource_path("assets/IAESTE_blue_logo.png")),
                                     size=(173,200))
 
 logoButton = customtkinter.CTkButton(lFrame,image=IAESTELogo, text="",fg_color="transparent",hover=False)
