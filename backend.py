@@ -24,7 +24,7 @@ def saveCSVName(fileCSV):
 def getOffersIds(fileCSV):
     global allIDs
     with open(fileCSV, errors="ignore") as file_obj:
-        reader_obj = csv.DictReader(file_obj)
+        reader_obj = csv.DictReader(file_obj, delimiter=';')
         for row in reader_obj:
                 if "ES-20" in row['Ref.No']:
                     allIDs.append(row['Ref.No'])
@@ -82,7 +82,10 @@ def languagesConfig(row):
                     isSpanish = 1
             else:
                 if 'Level' in opt and isSpanish == 1:
-                    allresutlts.append(lanRules['Spanish'][lang])
+                    langFormated = lang.split('(')[0].split()
+                    print("formated",langFormated[0])
+                    print("original",lang)
+                    allresutlts.append(lanRules['Spanish'][langFormated[0]])
                     isSpanish = 0
                 elif 'Level' not in opt:
                     allresutlts.append(row[opt])

@@ -58,7 +58,7 @@
         "points": 0,
         "FieldsOfStudy": [
           {
-            "field": "food techonology and processing",
+            "field": "01.1002",
             "points": 10
           }
         ]
@@ -68,11 +68,11 @@
         "points": 10,
         "FieldsOfStudy": [
           {
-            "field": "enviromental studies",
+            "field": "03.0103",
             "points": 10
           },
           {
-            "field": "enviromental science",
+            "field": "03.0104",
             "points": 10
           }
         ]
@@ -82,23 +82,23 @@
         "points": 20,
         "FieldsOfStudy": [
           {
-            "field": "architecture",
+            "field": "04.0201",
             "points": 20
           },
           {
-            "field": "city/Urban, community and regional planning",
+            "field": "04.0301",
             "points": 20
           },
           {
-            "field": "enviromental design / architecture",
+            "field": "04.0401",
             "points": 20
           },
           {
-            "field": "landscape architecture",
+            "field": "04.0601",
             "points": 20
           },
           {
-            "field": "architectural technology / technician",
+            "field": "04.0901",
             "points": 20
           }
         ]
@@ -108,15 +108,11 @@
         "points": 0,
         "FieldsOfStudy": [
           {
-            "field": "artificial intelligence",
+            "field": "11.0102",
             "points": 20
           },
           {
-            "field": "computer system networking",
-            "points": 10
-          },
-          {
-            "field": "telecommunications",
+            "field": "11.0901",
             "points": 10
           }
         ]
@@ -131,43 +127,43 @@
         "points": 0,
         "FieldsOfStudy": [
           {
-            "field": "bioengineering and biomedical engineering",
+            "field": "14.0501",
             "points": 20
           },
           {
-            "field": "environmental/ environmental health engineering",
+            "field": "14.1401",
             "points": 10
           },
           {
-            "field": "metallurgical engineering",
+            "field": "14.2001",
             "points": 20
           },
           {
-            "field": "naval architecture and marine engineering",
+            "field": "14.2201",
             "points": 10
           },
           {
-            "field": "nuclear engineering",
+            "field": "14.2301",
             "points": 20
           },
           {
-            "field": "industrial engineering",
+            "field": "14.3501",
             "points": 20
           },
           {
-            "field": "manufacturing engineering",
+            "field": "14.3601",
             "points": 20
           },
           {
-            "field": "biochemical engineering",
+            "field": "14.4301",
             "points": 20
           },
           {
-            "field": "quality control technolgy/technician",
+            "field": "15.0702",
             "points": 20
           },
           {
-            "field": "nanotechnology",
+            "field": "15.1601",
             "points": 20
           }
         ]
@@ -177,35 +173,39 @@
         "points": 20,
         "FieldsOfStudy": [
           {
-            "field": "civil engineering",
+            "field": "14.0801",
             "points": 20
           },
           {
-            "field": "geotechnical and geoenviromental engineering",
+            "field": "14.0802",
             "points": 20
           },
           {
-            "field": "transportantion and highway engineering",
+            "field": "14.0803",
             "points": 20
           },
           {
-            "field": "Water Resources engineering",
+            "field": "14.0804",
             "points": 20
           },
           {
-            "field": "Mining and Mineral engineering",
+            "field": "14.0805",
+            "points": 20
+          },
+          {
+            "field": "14.2101",
             "points": 10
           },
           {
-            "field": "construction engineering",
+            "field": "14.3301",
             "points": 20
           },
           {
-            "field": "Survering engineering",
+            "field": "14.3801",
             "points": 10
           },
           {
-            "field": "Geological/GeoPhysical engineering",
+            "field": "14.3901",
             "points": 10
           }
         ]
@@ -215,31 +215,31 @@
         "points": 20,
         "FieldsOfStudy": [
           {
-            "field": "Electrical and Electronics engineering",
+            "field": "14.1001",
             "points": 20
           },
           {
-            "field": "Laser and Optical engineering",
+            "field": "14.1003",
             "points": 20
           },
           {
-            "field": "Telecommunications engineering",
+            "field": "14.1004",
             "points": 10
           },
           {
-            "field": "Electrical, Electronics and communicationsengineering, Other",
+            "field": "14.1099",
             "points": 20
           },
           {
-            "field": "Electromechanical engineering",
+            "field": "14.4101",
             "points": 20
           },
           {
-            "field": "Energy engineering",
+            "field": "14.XX01",
             "points": 20
           },
           {
-            "field": "Embedded Systems",
+            "field": "14.XX02",
             "points": 20
           }
         ]
@@ -249,19 +249,19 @@
         "points": 20,
         "FieldsOfStudy": [
           {
-            "field": "aerospace,aeronautical and astronautical/space engineering",
+            "field": "14.0201",
             "points": 20
           },
           {
-            "field": "engineering mechanics",
+            "field": "14.1101",
             "points": 20
           },
           {
-            "field": "mechanical engineering",
+            "field": "14.1901",
             "points": 20
           },
           {
-            "field": "mechatronics, robotics, and automation engineering",
+            "field": "14.4201",
             "points": 20
           }
         ]
@@ -271,43 +271,43 @@
         "points": 10,
         "FieldsOfStudy": [
           {
-            "field": "biology / biological sciences, general",
+            "field": "26.0101",
             "points": 10
           },
           {
-            "field": "biomedical sciences, general",
+            "field": "26.0102",
             "points": 10
           },
           {
-            "field": "biochemistry",
+            "field": "26.0202",
             "points": 10
           },
           {
-            "field": "biophysics",
+            "field": "26.0203",
             "points": 10
           },
           {
-            "field": "molecular biology",
+            "field": "26.0204",
             "points": 10
           },
           {
-            "field": "molecular biochemistry",
+            "field": "26.0205",
             "points": 10
           },
           {
-            "field": "structural biology",
+            "field": "26.0207",
             "points": 10
           },
           {
-            "field": "biochemistry and molecular biology",
+            "field": "26.0210",
             "points": 10
           },
           {
-            "field": "microbiology, general",
+            "field": "26.0502",
             "points": 10
           },
           {
-            "field": "biotechnology",
+            "field": "26.1201",
             "points": 10
           }
         ]
@@ -332,67 +332,67 @@
         "points": 20,
         "FieldsOfStudy": [
           {
-            "field": "chemistry, general",
+            "field": "40.0501",
             "points": 10
           },
           {
-            "field": "analytical chemistry",
+            "field": "40.0502",
             "points": 10
           },
           {
-            "field": "inorganic chemistry",
+            "field": "40.0503",
             "points": 10
           },
           {
-            "field": "organic chemistry",
+            "field": "40.0504",
             "points": 10
           },
           {
-            "field": "physical chemistry",
+            "field": "40.0506",
             "points": 10
           },
           {
-            "field": "polymer chemistry",
+            "field": "40.0507",
             "points": 10
           },
           {
-            "field": "chemical physics",
+            "field": "40.0508",
             "points": 10
           },
           {
-            "field": "environmental chemistry",
+            "field": "40.0509",
             "points": 10
           },
           {
-            "field": "materials science",
+            "field": "40.1001",
             "points": 10
           },
           {
-            "field": "materials chemistry",
+            "field": "40.1002",
             "points": 10
           },
           {
-            "field": "chemical engineering",
+            "field": "14.0701",
             "points": 20
           },
           {
-            "field": "chemical and biomolecular engineering",
+            "field": "14.0702",
             "points": 20
           },
           {
-            "field": "materials engineering",
+            "field": "14.1801",
             "points": 20
           },
           {
-            "field": "petroleum engineering",
+            "field": "14.2501",
             "points": 20
           },
           {
-            "field": "textile sciences and engineering",
+            "field": "14.2801",
             "points": 10
           },
           {
-            "field": "Polymer/Plastics engineering",
+            "field": "14.3201",
             "points": 20
           }
         ]
@@ -412,11 +412,11 @@
         "default": 0,
         "FieldsOfStudy": [
           {
-            "field": "Logistics, Materials, and Supply chain Management",
+            "field": "52.0203",
             "points": 20
           },
           {
-            "field": "Operations Management and Supervision",
+            "field": "52.0205",
             "points": 10
           }
         ]
